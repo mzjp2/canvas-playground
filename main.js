@@ -16,13 +16,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
+  ctx.lineWidth = 10;
 
 
   function draw(e) {
     if(!isDrawing) return;
     ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
     ctx.beginPath();
-    ctx.lineWidth = 10;
     ctx.moveTo(lastX, lastY);
     ctx.lineTo(e.offsetX, e.offsetY);
     ctx.stroke();
