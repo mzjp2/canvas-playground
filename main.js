@@ -6,21 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
   canvas.width = body.offsetWidth;
   canvas.height = body.offsetHeight
 
-  document.querySelector('#button1').onclick = setColour;
-
-  function setColour() {
-    var obj = document.querySelector('#mySelect');
-    var col = obj.options[obj.selectedIndex].text;
-    if (col == "red"){ctx.strokeStyle = '#FF0000'}
-    if (col == "blue"){ctx.strokeStyle = '#0000FF'}
-    //ctx.strokeStyle = '#BADA55';
-  }
-
   ctx.lineWidth = 10;
 
   var lastX = 0;
   var lastY = 0;
   var isDrawing = false;
+  var hue = 0;
+  var direction = true;
 
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
@@ -28,12 +20,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function draw(e) {
     if(!isDrawing) return;
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
     ctx.beginPath();
+    ctx.lineWidth = 10;
     ctx.moveTo(lastX, lastY);
     ctx.lineTo(e.offsetX, e.offsetY);
     ctx.stroke();
     console.log(e);
     [lastX, lastY] = [e.offsetX, e.offsetY];
+
+    if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+      direction = !direction;
+    }
+    if(direction) {
+      ctx.lineWidth++
+    } else {ctx.lineWidth--}
+
+    hue++
+
   }
 
   addEventListener('mousedown', (e) => {
